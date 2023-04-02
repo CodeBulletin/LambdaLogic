@@ -4,8 +4,11 @@
 #include <SFML/Main.hpp>
 #include <imgui.h>
 #include <imgui-SFML.h>
+
 #include <string>
+
 #include "sfhelper/sfh_color.hpp"
+
 
 class App {
 public:
@@ -14,115 +17,123 @@ public:
 	// App operator=(App& app) = delete;
 	~App() = default;
 
-	virtual void create_window() {
-		settings.antialiasingLevel = 8;
-		vid = sf::VideoMode::getFullscreenModes()[10];
-
-		window.create(vid, name, sf::Style::Resize | sf::Style::Close | sf::Style::Titlebar, settings);
-
-		width = vid.size.x;
-		height = vid.size.y;
-
-		window.setVerticalSyncEnabled(true);
-
-		ImGui::SFML::Init(window);
+	void create_window(std::string name, uint32_t style, sf::Vector3<uint32_t> vec = {500u, 500u, 32u}) {
+		this->m_name = name;
+		this->m_style = style;
+		this->m_videoMode = sf::VideoMode({vec.x, vec.y}, vec.z);
+		this->m_window.create(this->m_videoMode, this->m_name, this->m_style = style, this->m_settings);
+		this->m_width = this->m_videoMode.size.x;
+		this->m_height = this->m_videoMode.size.y;
+		this->m_window.setVerticalSyncEnabled(true);
 	}
 
 	virtual void run() {
 		setup();
-		while (window.isOpen()) {
-			if (GUI) ImGui::SFML::ProcessEvent(event);
-			frameTime = clock.getElapsedTime().asSeconds();
-			sf::Time time = clock.restart();
-			frameRate = std::round(1.0f / frameTime);
-			while (window.pollEvent(event)) {
+		while (this->m_window.isOpen()) {
+			this->m_frameTime = this->m_clock.getElapsedTime().asSeconds();
+			sf::Time time = this->m_clock.restart();
+			this->m_frameRate = std::round(1.0f / this->m_frameTime);
+			while (this->m_window.pollEvent(this->m_event)) {
+				if (this->m_guiEnabled) ImGui::SFML::ProcessEvent(this->m_event);
 				eventManager();
+				if (!this->m_window.isOpen()) return;
 			}
-			if (GUI) {
-				ImGui::SFML::Update(window, time);
+			if (this->m_guiEnabled) {
+				ImGui::SFML::Update(this->m_window, time);
 				gui();
 			}
 			loop();
-			if (GUI) ImGui::SFML::Render(window);
-			window.display();
+			if (this->m_guiEnabled) {
+				ImGui::SFML::Render(this->m_window);
+			}
+			this->m_window.display();
 		}
 	}
 
 	virtual void setup() = 0;
 	virtual void loop() = 0;
 
-	virtual void Close() {
-		window.close();
+	virtual void close() {
+		this->m_window.close();
 	}
 
 	virtual void gui() {}
-	virtual void KeyPressedEvent() {}
-	virtual void KeyReleasedEvent() {}
-	virtual void MouseButtonPressedEvent() {}
-	virtual void MouseButtonReleasedEvent() {}
-	virtual void ClosedEvent() {
-		Close();
+
+	virtual void keyPressedEvent() {}
+	virtual void keyReleasedEvent() {}
+	virtual void mouseButtonPressedEvent() {}
+	virtual void mouseButtonReleasedEvent() {}
+	virtual void closedEvent() {
+		close();
 	}
-	virtual void LostFocusEvent() {}
-	virtual void GainedFocusEvent() {}
-	virtual void MouseEnteredEvent() {}
-	virtual void MouseLeftEvent() {}
-	virtual void MouseMovedEvent() {}
-	virtual void MouseWheelScrolledEvent() {}
-	virtual void TextEnteredEvent() {}
+	virtual void lostFocusEvent() {}
+	virtual void gainedFocusEvent() {}
+	virtual void mouseEnteredEvent() {}
+	virtual void mouseLeftEvent() {}
+	virtual void mouseMovedEvent() {}
+	virtual void mouseWheelScrolledEvent() {}
+	virtual void textEnteredEvent() {}
+	virtual void resizeEvent() {}
 
 	virtual void eventManager() {
-		switch (event.type)
+		switch (this->m_event.type)
 		{
 		case sf::Event::KeyPressed:
-			KeyPressedEvent();
+			keyPressedEvent();
 			break;
 		case sf::Event::KeyReleased:
-			KeyReleasedEvent();
+			keyReleasedEvent();
 			break;
 		case sf::Event::MouseButtonPressed:
-			MouseButtonPressedEvent();
+			mouseButtonPressedEvent();
 			break;
 		case sf::Event::MouseButtonReleased:
-			MouseButtonReleasedEvent();
+			mouseButtonReleasedEvent();
 			break;
 		case sf::Event::Closed:
-			ClosedEvent();
+			closedEvent();
 			break;
 		case sf::Event::LostFocus:
-			LostFocusEvent();
+			lostFocusEvent();
 			break;
 		case sf::Event::GainedFocus:
-			GainedFocusEvent();
+			gainedFocusEvent();
 			break;
 		case sf::Event::MouseEntered:
-			MouseEnteredEvent();
+			mouseEnteredEvent();
 			break;
 		case sf::Event::MouseLeft:
-			MouseLeftEvent();
+			mouseLeftEvent();
 			break;
 		case sf::Event::MouseMoved:
-			MouseMovedEvent();
+			mouseMovedEvent();
 			break;
 		case sf::Event::MouseWheelScrolled:
-			MouseWheelScrolledEvent();
+			mouseWheelScrolledEvent();
 			break;
 		case sf::Event::TextEntered:
-			TextEnteredEvent();
+			textEnteredEvent();
+			break;
+		case sf::Event::Resized:
+			resizeEvent();
 			break;
 		default:
 			break;
 		}
 	}
+
 protected:
-	sf::RenderWindow window;
-	sf::VideoMode vid;
-	sf::ContextSettings settings;
-	std::string name;
-	sf::Event event = sf::Event();
-	sf::Clock clock;
-	int width = 0, height = 0;
-	float frameTime;
-	int frameRate;
-	bool GUI = true;
+	sf::RenderWindow m_window;
+	sf::VideoMode m_videoMode;
+	sf::ContextSettings m_settings;
+	sf::Event m_event = sf::Event();
+	sf::Clock m_clock;
+
+	std::string m_name;
+
+	uint32_t m_style;
+	bool m_guiEnabled = true;
+	float m_frameTime;
+	int m_frameRate;
+	int m_width = 0, m_height = 0;
 };

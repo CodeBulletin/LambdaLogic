@@ -140,7 +140,7 @@ namespace sfh {
 			return { r, g, b, alpha };
 		}
 
-		uint32_t RGBA_toHex(const sf::Color& color) {
+		uint32_t RGBAtoHex(const sf::Color& color) {
 			uint32_t hex = color.r;
 			hex <<= 8;
 			hex += color.g;
@@ -152,7 +152,7 @@ namespace sfh {
 		}
 
 		template<typename type = std::vector<uint8_t>>
-		uint32_t RGBA_toHex(const type& color) {
+		uint32_t RGBAtoHex(const type& color) {
 			uint32_t hex = color[0];
 			hex <<= 8;
 			hex += color[1];

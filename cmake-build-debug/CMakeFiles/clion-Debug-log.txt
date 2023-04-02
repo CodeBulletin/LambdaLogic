@@ -1,0 +1,16 @@
+/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/opt/clion/bin/ninja/linux/x64/ninja -G Ninja -S /home/bhavesh/Desktop/LambdaLogic -B /home/bhavesh/Desktop/LambdaLogic/cmake-build-debug
+-- libudev stable: 1
+-- Found UDev: /usr/lib/libudev.so
+--    include: /usr/include
+CMake Warning at /usr/share/cmake/Modules/CPack.cmake:507 (message):
+  CPack.cmake has already been included!!
+Call Stack (most recent call first):
+  cmake-build-debug/_deps/sfml-src/CMakeLists.txt:502 (include)
+
+
+CPack warning: both CPACK_COMPONENTS_ALL and CPACK_MONOLITHIC_INSTALL have been set.
+Defaulting to a monolithic installation.
+-- Found ImGui v1.89.5 WIP in /home/bhavesh/Desktop/LambdaLogic/cmake-build-debug/_deps/imgui-src
+-- Configuring done (2.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/bhavesh/Desktop/LambdaLogic/cmake-build-debug
