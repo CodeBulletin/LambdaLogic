@@ -7,10 +7,10 @@ class Loader : private App {
 private: 
 	sf::View m_view;
 	std::vector<std::string> m_modes;
-	bool m_is_selected = true;
+	bool m_isSelected = true;
 	int m_selected = 0;
-	std::string m_selected_mode = "Select a file";
-	std::string m_font_file = "./Assets/Fonts/OpenSans-Regular.ttf";
+	std::string m_selectedMode = "Select a file";
+	std::string m_fontFile = "./Assets/Fonts/OpenSans-Regular.ttf";
 
 public:
 	uint32_t m_win_width = 0;
@@ -49,7 +49,7 @@ private:
 			m_modes.push_back(m);
 		}
 		styleGui();
-		m_selected_mode = m_modes[0];
+        m_selectedMode = m_modes[0];
 	}
 
 	void loop() override {
@@ -61,7 +61,7 @@ private:
 		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.09f, 0.09f, 0.15f, 0.0f);
 		// style.Colors[ImGuiCol_ScrollbarBg] = 
 		ImGuiIO& io = ImGui::GetIO();
-		font = io.Fonts->AddFontFromFileTTF(m_font_file.c_str(), 20.f);
+		font = io.Fonts->AddFontFromFileTTF(m_fontFile.c_str(), 20.f);
 		// io.FontGlobalScale = 0.5f;
 		if (!ImGui::SFML::UpdateFontTexture()) {
 			sfh::debug::log("Error updating font texture");
@@ -91,17 +91,17 @@ private:
 		}
 
 		//imgui combobox here
-		// alignCenterImgui(m_selected_mode.c_str(), 0.5f);
+		// alignCenterImgui(m_selectedMode.c_str(), 0.5f);
 		ImGui::SetNextItemWidth(combo_box_width);
 		alignCenterImgui(combo_box_width, 0.5f);
-		if (ImGui::BeginCombo("##combo", m_selected_mode.c_str())) {
+		if (ImGui::BeginCombo("##combo", m_selectedMode.c_str())) {
 			int i = 0;
 			for (std::string& mode : m_modes) {
 				bool is_selected = (m_selected == i);
 				if (ImGui::Selectable(mode.c_str(), is_selected)) {
 					m_selected = i;
-					m_is_selected = true;
-					m_selected_mode = mode;
+                    m_isSelected = true;
+                    m_selectedMode = mode;
 				}
 				if (is_selected) {
 					ImGui::SetItemDefaultFocus();
@@ -113,9 +113,9 @@ private:
 
 		alignCenterImgui("Start", 0.5f);
 		if (ImGui::Button("Start")) {
-			m_win_width = std::stoi(m_selected_mode.substr(0, m_selected_mode.find("x")));
-			m_win_height = std::stoi(m_selected_mode.substr(m_selected_mode.find("x") + 1, m_selected_mode.find("x", m_selected_mode.find("x") + 1)));
-			m_win_bitsPerPixel = std::stoi(m_selected_mode.substr(m_selected_mode.find("x", m_selected_mode.find("x") + 1) + 1, m_selected_mode.length()));
+			m_win_width = std::stoi(m_selectedMode.substr(0, m_selectedMode.find("x")));
+			m_win_height = std::stoi(m_selectedMode.substr(m_selectedMode.find("x") + 1, m_selectedMode.find("x", m_selectedMode.find("x") + 1)));
+			m_win_bitsPerPixel = std::stoi(m_selectedMode.substr(m_selectedMode.find("x", m_selectedMode.find("x") + 1) + 1, m_selectedMode.length()));
 			close();
 		}
 

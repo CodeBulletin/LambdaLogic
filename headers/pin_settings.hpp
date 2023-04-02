@@ -5,12 +5,11 @@
 
 // Singleton class
 
-class pin_settings {
-public:
+struct pin_settings {
     sf::Vector2f pin_size;
-    float space_between_pins;
+    float space_between_pins{};
     sf::Color pin_outline_color;
-    float pin_outline_thickness;
+    float pin_outline_thickness{};
     sf::Color pin_active_fill_color;
     sf::Color pin_inactive_fill_color;
     sf::Color pin_active_fill_color_hover;

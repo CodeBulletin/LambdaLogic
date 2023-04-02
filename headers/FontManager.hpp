@@ -4,15 +4,15 @@
 
 class FontManager {
 private:
-    std::unordered_map<std::string, sf::Font> fonts;
+    std::unordered_map<std::string, sf::Font> m_fonts;
 public:
     sf::Font& get_font(const std::string& font_name) {
-        if (fonts.find(font_name) == fonts.end()) {
-            if (!fonts[font_name].loadFromFile("Assets/Fonts/" + font_name)) {
-                return fonts["arial.ttf"];
+        if (m_fonts.find(font_name) == m_fonts.end()) {
+            if (!m_fonts[font_name].loadFromFile("Assets/Fonts/" + font_name)) {
+                return m_fonts["arial.ttf"];
             }
         }
-        return fonts[font_name];
+        return m_fonts[font_name];
     }
     
     static FontManager* instance;

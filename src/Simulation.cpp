@@ -14,13 +14,13 @@ void Simulation::run() {
     }
 }
 
-void Simulation::add_chip(chip &chip) {
+void Simulation::add_chip(Gate &chip) {
     this->m_chips.emplace_back(chip);
 }
 
 void Simulation::remove_chip(int chip_id) {
     for (int i = 0; i < this->m_chips.size(); i++) {
-        if (this->m_chips[i].get_chip_id() == chip_id) {
+        if (this->m_chips[i].getId() == chip_id) {
             this->m_chips.erase(this->m_chips.begin() + i);
         }
     }

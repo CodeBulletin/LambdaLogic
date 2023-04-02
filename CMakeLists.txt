@@ -33,7 +33,7 @@ add_subdirectory(src)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 # Create the executable and specify the source files
-add_executable(${ExecutableName} ./src/main.cpp ./src/pin.cpp ./src/chip.cpp src/Simulation.cpp headers/Simulation.hpp)
+add_executable(${ExecutableName} ./src/main.cpp src/Pin.cpp src/Gate.cpp src/Simulation.cpp headers/Simulation.hpp src/Connection.cpp headers/Connection.hpp)
 
 # Add include directories for the executable
 target_include_directories(${ExecutableName} PRIVATE ./headers/ "${IMGUI_DIR}" "${sfml_SOURCE_DIR}/include")

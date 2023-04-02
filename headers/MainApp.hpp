@@ -1,13 +1,16 @@
 #pragma once
 
 #include "App.hpp"
-#include "chip.hpp"
+#include "Gate.hpp"
 #include "FontManager.hpp"
 
 class MainApp : public App {
 private:
 	pin_settings& pin_setting = *pin_settings::get_instance();
 	chip_settings& chip_setting = *chip_settings::get_instance();
+
+public:
+    std::vector<Gate> chips;
 
 public:
 	explicit MainApp(sf::Vector3<uint32_t> vec = {500u, 500u, 32u}) {
@@ -32,13 +35,13 @@ public:
 		chip_setting.chip_outline_color = sf::Color::White;
 		setupGUI();
 
-		chip c1("AND");
-		chip c2("OR");
+		Gate c1("AND");
+		Gate c2("OR");
 
-		c1.set_chip_pos({100, 100});
-		c1.set_chip_color(sf::Color::Red);
-		c2.set_chip_pos({600, 100});
-		c2.set_chip_color(sf::Color::Blue);
+        c1.setPos({100, 100});
+        c1.setColor(sf::Color::Red);
+        c2.setPos({600, 100});
+        c2.setColor(sf::Color::Blue);
 
 		chips.push_back(c1);
 		chips.push_back(c2);
