@@ -241,13 +241,13 @@ build CMakeFiles/LambdaLogic.dir/src/chip.cpp.o: CXX_COMPILER__LambdaLogic_unsca
   OBJECT_DIR = CMakeFiles/LambdaLogic.dir
   OBJECT_FILE_DIR = CMakeFiles/LambdaLogic.dir/src
 
-build CMakeFiles/LambdaLogic.dir/headers/Simulation.cpp.o: CXX_COMPILER__LambdaLogic_unscanned_Release /home/bhavesh/Desktop/LambdaLogic/headers/Simulation.cpp || cmake_object_order_depends_target_LambdaLogic
+build CMakeFiles/LambdaLogic.dir/src/Simulation.cpp.o: CXX_COMPILER__LambdaLogic_unscanned_Release /home/bhavesh/Desktop/LambdaLogic/src/Simulation.cpp || cmake_object_order_depends_target_LambdaLogic
   DEFINES = -DIMGUI_USER_CONFIG=\"imconfig-SFML.h\"
-  DEP_FILE = CMakeFiles/LambdaLogic.dir/headers/Simulation.cpp.o.d
+  DEP_FILE = CMakeFiles/LambdaLogic.dir/src/Simulation.cpp.o.d
   FLAGS = -O3 -DNDEBUG -std=c++23 -fdiagnostics-color=always
   INCLUDES = -I/home/bhavesh/Desktop/LambdaLogic/./headers -I/home/bhavesh/Desktop/LambdaLogic -I/include -I/home/bhavesh/Desktop/LambdaLogic/cmake-build-release/_deps/imgui-src -I/home/bhavesh/Desktop/LambdaLogic/cmake-build-release/_deps/imgui-sfml-src -I/home/bhavesh/Desktop/LambdaLogic/cmake-build-release/_deps/sfml-src/include
   OBJECT_DIR = CMakeFiles/LambdaLogic.dir
-  OBJECT_FILE_DIR = CMakeFiles/LambdaLogic.dir/headers
+  OBJECT_FILE_DIR = CMakeFiles/LambdaLogic.dir/src
 
 
 # =============================================================================
@@ -257,7 +257,7 @@ build CMakeFiles/LambdaLogic.dir/headers/Simulation.cpp.o: CXX_COMPILER__LambdaL
 #############################################
 # Link the executable LambdaLogic-0.1.0
 
-build LambdaLogic-0.1.0: CXX_EXECUTABLE_LINKER__LambdaLogic_Release CMakeFiles/LambdaLogic.dir/src/main.cpp.o CMakeFiles/LambdaLogic.dir/src/pin.cpp.o CMakeFiles/LambdaLogic.dir/src/chip.cpp.o CMakeFiles/LambdaLogic.dir/headers/Simulation.cpp.o | _deps/imgui-sfml-build/libImGui-SFML.so _deps/sfml-build/lib/libsfml-graphics.so.3.0.0 _deps/sfml-build/lib/libsfml-window.so.3.0.0 _deps/sfml-build/lib/libsfml-system.so.3.0.0 /usr/lib/libGL.so /usr/lib/libGLU.so || _deps/imgui-sfml-build/libImGui-SFML.so _deps/sfml-build/lib/libsfml-graphics.so _deps/sfml-build/lib/libsfml-system.so _deps/sfml-build/lib/libsfml-window.so _deps/sfml-build/lib/libsfml-graphics.so _deps/sfml-build/lib/libsfml-window.so _deps/sfml-build/lib/libsfml-system.so
+build LambdaLogic-0.1.0: CXX_EXECUTABLE_LINKER__LambdaLogic_Release CMakeFiles/LambdaLogic.dir/src/main.cpp.o CMakeFiles/LambdaLogic.dir/src/pin.cpp.o CMakeFiles/LambdaLogic.dir/src/chip.cpp.o CMakeFiles/LambdaLogic.dir/src/Simulation.cpp.o | _deps/imgui-sfml-build/libImGui-SFML.so _deps/sfml-build/lib/libsfml-graphics.so.3.0.0 _deps/sfml-build/lib/libsfml-window.so.3.0.0 _deps/sfml-build/lib/libsfml-system.so.3.0.0 /usr/lib/libGL.so /usr/lib/libGLU.so || _deps/imgui-sfml-build/libImGui-SFML.so _deps/sfml-build/lib/libsfml-graphics.so _deps/sfml-build/lib/libsfml-system.so _deps/sfml-build/lib/libsfml-window.so _deps/sfml-build/lib/libsfml-graphics.so _deps/sfml-build/lib/libsfml-window.so _deps/sfml-build/lib/libsfml-system.so
   FLAGS = -O3 -DNDEBUG
   LINK_LIBRARIES = -Wl,-rpath,/home/bhavesh/Desktop/LambdaLogic/cmake-build-release/_deps/imgui-sfml-build:/home/bhavesh/Desktop/LambdaLogic/cmake-build-release/_deps/sfml-build/lib  _deps/imgui-sfml-build/libImGui-SFML.so  _deps/sfml-build/lib/libsfml-graphics.so.3.0.0  _deps/sfml-build/lib/libsfml-window.so.3.0.0  _deps/sfml-build/lib/libsfml-system.so.3.0.0  /usr/lib/libGL.so  /usr/lib/libGLU.so
   OBJECT_DIR = CMakeFiles/LambdaLogic.dir
