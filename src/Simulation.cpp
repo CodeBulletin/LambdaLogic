@@ -61,9 +61,7 @@ void Simulation::removeChip(int chip_id) {
             for (int j = 0; j < chip->getOutputPinCount(); j++) {
                 removePin(chip->getOutputPins()[j].getId());
             }
-            std::cout << this->m_chips.size() << std::endl;
             this->m_chips.erase(this->m_chips.begin() + i);
-            std::cout << this->m_chips.size() << std::endl;
             delete chip;
             return;
         }
