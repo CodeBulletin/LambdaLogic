@@ -11,6 +11,8 @@ set(ExecutableName "LambdaLogic")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_LINKER_FLAGS "-static -static-libgcc -static-libstdc++")
+set(SFML_STATIC_LIBRARIES TRUE)
 
 # Include CTest and enable testing
 include(CTest)
@@ -40,7 +42,6 @@ target_include_directories(${ExecutableName} PRIVATE ./headers/ "${IMGUI_DIR}" "
 
 # Link the executable against the necessary libraries
 target_link_libraries(${ExecutableName} PRIVATE ImGui-SFML::ImGui-SFML sfml-graphics sfml-window sfml-system)
-
 
 
 # Set properties for the executable
