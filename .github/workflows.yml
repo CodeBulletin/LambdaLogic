@@ -1,7 +1,7 @@
 name: Build pipeline
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
   linux:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
       run: |
         git clone https://github.com/SFML/SFML.git
         cd SFML
-        git checkout master
+        git checkout main
         cmake .
         make
         sudo make install
