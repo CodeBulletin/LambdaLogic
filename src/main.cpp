@@ -2,12 +2,37 @@
 #include "Loader.hpp"
 #include "MainApp.hpp"
 
+
 chip_settings* chip_settings::instance = chip_settings::get_instance();
 pin_settings* pin_settings::instance = pin_settings::get_instance();
 FontManager* FontManager::instance = FontManager::get_instance();
+int Object::id_counter = 0;
 
-int main() { 
-	
+
+//int main() {
+//    Simulation sim;
+//
+//    sim.add_chip(new And());
+//    sim.add_chip(new And());
+//    sim.add_chip(new And());
+//    sim.createConnection(3, 9);
+//    sim.createConnection(7, 10);
+//
+//    sim.setPinState(1, 1);
+//    sim.setPinState(2, 1);
+//    sim.setPinState(5, 1);
+//    sim.setPinState(6, 1);
+
+//    for (int i = 0; i < 100; i++) {
+//    sim.run();
+//    sim.run();
+//
+//
+//    }
+//}
+
+int main() {
+
 	uint32_t m_width;
 	uint32_t m_height;
 	uint32_t m_bitsPerPixel;

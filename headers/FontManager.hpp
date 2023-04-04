@@ -3,9 +3,9 @@
 #include <SFML/Graphics.hpp>
 
 class FontManager {
-private:
-    std::unordered_map<std::string, sf::Font> m_fonts;
 public:
+
+    // find font in map, if not found, load it from file
     sf::Font& get_font(const std::string& font_name) {
         if (m_fonts.find(font_name) == m_fonts.end()) {
             if (!m_fonts[font_name].loadFromFile("Assets/Fonts/" + font_name)) {
@@ -22,4 +22,7 @@ public:
         }
         return instance;
     }
+
+private:
+    std::unordered_map<std::string, sf::Font> m_fonts;
 };

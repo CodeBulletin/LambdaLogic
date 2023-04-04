@@ -8,7 +8,7 @@ set(PROJECT_VERSION "0.1.0")
 set(ExecutableName "LambdaLogic")
 
 # Set the C++ standard and disable any extensions
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -33,13 +33,15 @@ add_subdirectory(src)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 # Create the executable and specify the source files
-add_executable(${ExecutableName} ./src/main.cpp src/Pin.cpp src/Gate.cpp src/Simulation.cpp headers/Simulation.hpp src/Connection.cpp headers/Connection.hpp)
+add_executable(${ExecutableName} ./src/main.cpp src/Pin.cpp src/Gate.cpp src/Simulation.cpp headers/Simulation.hpp src/Connection.cpp headers/Connection.hpp headers/Nand.hpp headers/Object.hpp)
 
 # Add include directories for the executable
 target_include_directories(${ExecutableName} PRIVATE ./headers/ "${IMGUI_DIR}" "${sfml_SOURCE_DIR}/include")
 
 # Link the executable against the necessary libraries
 target_link_libraries(${ExecutableName} PRIVATE ImGui-SFML::ImGui-SFML sfml-graphics sfml-window sfml-system)
+
+
 
 # Set properties for the executable
 set_target_properties(${ExecutableName} PROPERTIES

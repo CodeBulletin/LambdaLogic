@@ -1,22 +1,32 @@
 #pragma once
 
 #include "App.hpp"
-#include "Gate.hpp"
 #include "FontManager.hpp"
+#include "Simulation.hpp"
+#include "Nand.hpp"
 
 class MainApp : public App {
 private:
+    sf::View m_view;
+
+
 	pin_settings& pin_setting = *pin_settings::get_instance();
 	chip_settings& chip_setting = *chip_settings::get_instance();
 
 public:
-    std::vector<Gate> chips;
+    Simulation sim;
+    bool place_chip = false;
+    bool is_mouse_pressed = false;
+
+    int selected_pin_id = -1;
 
 public:
 	explicit MainApp(sf::Vector3<uint32_t> vec = {500u, 500u, 32u}) {
 		m_settings.antialiasingLevel = 8;
 		create_window("LambdaLogic", sf::Style::Default, vec);
 		FontManager::get_instance()->get_font("Roboto-Regular.ttf");
+        m_view = sf::View(sf::FloatRect({0.0f, 0.0f}, {(float)m_width, (float)m_height}));
+        m_window.setView(m_view);
 	}
 
 	void setup() override {
@@ -34,17 +44,6 @@ public:
 		chip_setting.chip_text_padding = 30;
 		chip_setting.chip_outline_color = sf::Color::White;
 		setupGUI();
-
-		Gate c1("AND");
-		Gate c2("OR");
-
-        c1.setPos({100, 100});
-        c1.setColor(sf::Color::Red);
-        c2.setPos({600, 100});
-        c2.setColor(sf::Color::Blue);
-
-		chips.push_back(c1);
-		chips.push_back(c2);
 	}
 
 	static void setupGUI() {
@@ -83,10 +82,8 @@ public:
 
 	void loop() override {
 		m_window.clear(sf::Color(0x121212ff));
-
-		for (auto& c : chips) {
-			c.draw(m_window);
-		}
+        sim.run();
+        sim.draw(m_window);
 	}
 
 	void gui() override {
@@ -101,4 +98,107 @@ public:
     sf::RenderWindow& getWindow(){
 		return this->m_window;
 	}
+
+    sf::Vector2f old_pos;
+
+    void mouseButtonPressedEvent() override {
+        if (!ImGui::GetIO().WantCaptureMouse) {
+            sf::Vector2f mouse_pos = m_window.mapPixelToCoords({m_event.mouseButton.x, m_event.mouseButton.y});
+            if (place_chip) {
+                if (m_event.mouseButton.button == sf::Mouse::Left) {
+                    Nand *a = new Nand();
+                    a->setPos(mouse_pos);
+                    sim.addChip(a);
+                }
+            } else {
+                Object *obj = sim.clicked(mouse_pos);
+                if (m_event.mouseButton.button == sf::Mouse::Left) {
+                    is_mouse_pressed = true;
+                    old_pos = m_window.mapPixelToCoords({m_event.mouseButton.x, m_event.mouseButton.y});
+                    if (obj == nullptr) {
+                        selected_pin_id = -1;
+                        return;
+                    }
+                    if (obj->getType() == "Pin") {
+                        std::cout << "Pin clicked" << std::endl;
+                        Pin *pin = (Pin *) obj;
+                        if (selected_pin_id == -1) {
+                            selected_pin_id = pin->getId();
+                        } else {
+                            sim.createConnection(selected_pin_id, pin->getId());
+                            std::cout << "Connection created" << std::endl;
+                            selected_pin_id = -1;
+                        }
+                    } else {
+                        selected_pin_id = -1;
+                    }
+                }
+                else if (m_event.mouseButton.button == sf::Mouse::Right) {
+                    selected_pin_id = -1;
+                    if (obj == nullptr) {
+                        return;
+                    }
+                    if (obj->getType() == "Pin") {
+                        Pin *pin = (Pin *) obj;
+                        pin->setState(!pin->getState());
+                    }
+                } else if (m_event.mouseButton.button == sf::Mouse::Middle) {
+                    selected_pin_id = -1;
+                    if (obj == nullptr) {
+                        return;
+                    }
+                    if (obj->getType() == "Gate") {
+                        Gate *gate = (Gate *) obj;
+                        sim.removeChip(gate->getId());
+                    }
+                }
+            }
+        }
+    }
+
+    void mouseButtonReleasedEvent() override {
+        if (!ImGui::GetIO().WantCaptureMouse) {
+            if (m_event.mouseButton.button == sf::Mouse::Left) {
+                is_mouse_pressed = false;
+            }
+        }
+    }
+
+    void mouseMovedEvent() override {
+        if (!ImGui::GetIO().WantCaptureMouse) {
+            if (is_mouse_pressed) {
+                sf::Vector2f new_pos = m_window.mapPixelToCoords({m_event.mouseMove.x, m_event.mouseMove.y});
+                sf::Vector2f delta = new_pos - old_pos;
+                m_view.move(-delta);
+                m_window.setView(m_view);
+            }
+        }
+    }
+
+    void mouseWheelScrolledEvent() override {
+        if (!ImGui::GetIO().WantCaptureMouse) {
+            if (m_event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
+                if (m_event.mouseWheelScroll.delta > 0) {
+                    m_view.zoom(0.9f);
+                } else {
+                    m_view.zoom(1.1f);
+                }
+                m_window.setView(m_view);
+            }
+        }
+    }
+
+    void keyReleasedEvent() override {
+        if (m_event.key.code == sf::Keyboard::Escape) {
+            place_chip = !place_chip;
+        }
+    }
+
+    void resizeEvent() override{
+        m_width = m_event.size.width;
+        m_height = m_event.size.height;
+        m_view.setSize({(float)m_width, (float)m_height});
+        m_view.setCenter({(float)m_width/2, (float)m_height/2});
+        m_window.setView(m_view);
+    }
 };
