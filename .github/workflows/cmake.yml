@@ -24,3 +24,43 @@ jobs:
         path: |
           build/LambdaLogic
           build/Assets
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        brew install cmake
+    - name: Build my project
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build . --config Release
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: macos-build
+        path: |
+          build/LambdaLogic.app
+          build/Assets
+  windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        choco install cmake
+    - name: Build my project
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build . --config Release
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows-build
+        path: |
+          build/LambdaLogic.exe
+          build/Assets
