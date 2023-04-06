@@ -6,6 +6,16 @@
 #include "Pin.hpp"
 #include "chip_settings.hpp"
 
+#include "FontManager.hpp"
+
+
+enum GateType {
+    INPUT_G = 0,
+    OUTPUT_G = 1,
+    LOGIC = 2,
+    MEMORY = 3,
+    CUSTOM = 4
+};
 
 class Gate : public Object {
 public:
@@ -21,7 +31,7 @@ public:
     virtual void setPos(sf::Vector2f chip_pos);
     virtual void setSize(sf::Vector2f chip_size);
     virtual void setColor(sf::Color chip_color);
-    virtual void setType(int chip_type);
+    virtual void setGateType(int chip_type);
 
     virtual sf::Vector2f getPos() const;
     virtual sf::Vector2f getSize() const;
@@ -32,16 +42,18 @@ public:
     virtual std::vector<Pin>& getOutputPins();
     virtual std::string getName() const;
     virtual const sf::RectangleShape& getRect() const;
+    virtual int getGateType() const;
 
     // other functions
     virtual void compute_shape();
     virtual void draw(sf::RenderWindow& window);
+    virtual void onClick() {}
 
     // pure virtual functions
     virtual void compute() = 0;
 
 protected:
-    sf::Text m_name;  // name of the chip
+    sf::Text m_name = sf::Text(FontManager::get_instance()->get_font("Roboto-Regular.ttf"), "", 30);  // name of the chip
     sf::RectangleShape m_shape;  // shape of the chip
     sf::Vector2f m_pos = {0, 0};  // position of the chip
     sf::Vector2f m_size = {0, 0};  // size of the chip

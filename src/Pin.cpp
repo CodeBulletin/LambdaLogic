@@ -40,12 +40,38 @@ void Pin::draw(sf::RenderWindow& window) {
     window.draw(this->m_shape);
 }
 
-void Pin::addConnection(Connection* connection) {
-    this->m_connection = connection;
+void Pin::addState(int state) {
+    this->m_states.push_back(state);
+}
+
+void Pin::computeState() {
+    int state_comb = 0;
+    for (auto& state : this->m_states) {
+        state_comb = state_comb || state;
+    }
+    setState(state_comb);
+    this->m_states.clear();
 }
 
 const sf::RectangleShape &Pin::getRect() const {
     return this->m_shape;
+}
+
+void Pin::addConnection(Connection* connection) {
+    this->m_connections.push_back(connection);
+}
+
+std::vector<Connection *> Pin::getConnections() const {
+    return this->m_connections;
+}
+
+void Pin::removeConnection(Connection *connection) {
+    for (int i = 0; i < this->m_connections.size(); i++) {
+        if (this->m_connections[i] == connection) {
+            this->m_connections.erase(this->m_connections.begin() + i);
+            break;
+        }
+    }
 }
 
 // Path: src/Pin.cpp

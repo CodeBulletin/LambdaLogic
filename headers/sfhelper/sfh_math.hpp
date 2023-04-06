@@ -13,31 +13,37 @@ namespace sfh {
 	//apply
 	template<typename r_type = sf::Vector2f, typename type = float>
 	r_type apply2d(const r_type& vec, std::function<type(type)> function) {
+		// Apply function to each component of the vector
 		return { function(vec.x), function(vec.y) };
 	}
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	r_type apply3d(const r_type& vec, std::function<type(type)> function) {
+		// Apply function to each component of the vector
 		return { function(vec.x), function(vec.y), function(vec.z) };
 	}
 	
 	template<typename r_type = std::vector<float>, typename type = float>
 	r_type apply2dList(const r_type& vec, std::function<type(type)> function) {
+		// Apply function to each component of the vector
 		return { function(vec[0]), function(vec[1]) };
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	r_type apply3dList(const r_type& vec, std::function<type(type)> function) {
+		// Apply function to each component of the vector
 		return { function(vec[0]), function(vec[1]), function(vec[2]) };
 	}
 
 	template<typename r_type = std::vector<float>,typename type = float>
 	r_type apply4dList(const r_type& vec, std::function<type(type)> function) {
+		// Apply function to each component of the vector
 		return { function(vec[0]), function(vec[1]), function(vec[2]), function(vec[3]) };
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	r_type applyNdList(const r_type& vec, std::function<type(type)> function) {
+		// Apply function to each component of the vector
 		r_type vec2;
 		for (type& i : vec) {
 			vec2.push_back(function(i));
@@ -48,11 +54,13 @@ namespace sfh {
 	//map
 	template<typename type = float>
 	type map(type v, type valmin, type valmax, type mapmin, type mapmax) {
+		// Map a value from one range to another
 		return mapmin + (mapmax - mapmin) * ((v - valmin) / (valmax - valmin));
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	const r_type map2d(const r_type& v, type valmin, type valmax, type mapmin, type mapmax) {
+		// Map a vector from one range to another
 		return {
 			map<type>(v.x, valmin, valmax, mapmin, mapmax),
 			map<type>(v.y, valmin, valmax, mapmin, mapmax)
@@ -61,6 +69,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	const r_type map3d(const r_type& v, type valmin, type valmax, type mapmin, type mapmax) {
+		// Map a vector from one range to another
 		return {
 			map<type>(v.x, valmin, valmax, mapmin, mapmax),
 			map<type>(v.y, valmin, valmax, mapmin, mapmax),
@@ -70,6 +79,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type map2dList(const r_type& v, type valmin, type valmax, type mapmin, type mapmax) {
+		// Map a vector from one range to another
 		return {
 			map<type>(v[0], valmin, valmax, mapmin, mapmax),
 			map<type>(v[1], valmin, valmax, mapmin, mapmax)
@@ -78,6 +88,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type& map3dList(const r_type& v, type valmin, type valmax, type mapmin, type mapmax) {
+		// Map a vector from one range to another
 		return {
 			map<type>(v[0], valmin, valmax, mapmin, mapmax),
 			map<type>(v[1], valmin, valmax, mapmin, mapmax),
@@ -87,6 +98,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type map4dList(const r_type& v, type valmin, type valmax, type mapmin, type mapmax) {
+		// Map a vector from one range to another
 		return {
 			map<type>(v[0], valmin, valmax, mapmin, mapmax),
 			map<type>(v[1], valmin, valmax, mapmin, mapmax),
@@ -97,6 +109,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type mapNdList(const r_type& v, type valmin, type valmax, type mapmin, type mapmax) {
+		// Map a vector from one range to another
 		r_type vec2;
 		for (auto& i : v) {
 			vec2.push_back(map<type>(i, valmin, valmax, mapmin, mapmax));
@@ -107,11 +120,13 @@ namespace sfh {
 	//clamp
 	template<typename type = float>
 	type clamp(type v, type min, type max) {
+		// Clamp a value between min and max
 		return v < min ? min : v > max ? max : v;
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	const r_type clamp2d(const r_type& v, type min, type max) {
+		// Clamp a vector between min and max
 		return {
 			clamp<type>(v.x, min, max),
 			clamp<type>(v.y, min, max)
@@ -120,6 +135,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	const r_type clamp3d(const r_type& v, type min, type max) {
+		// Clamp a vector between min and max
 		return {
 			clamp<type>(v.x, min, max),
 			clamp<type>(v.y, min, max),
@@ -129,6 +145,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type& clamp2dList(const r_type& v, type min, type max) {
+		// Clamp a vector between min and max
 		return {
 			clamp<type>(v[0], min, max),
 			clamp<type>(v[1], min, max)
@@ -137,6 +154,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type& clamp3dList(const r_type& v, type min, type max) {
+		// Clamp a vector between min and max
 		return {
 			clamp<type>(v[0], min, max),
 			clamp<type>(v[1], min, max),
@@ -146,6 +164,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type& clamp4dList(const r_type& v, type min, type max) {
+		// Clamp a vector between min and max
 		return {
 			clamp<type>(v[0], min, max),
 			clamp<type>(v[1], min, max),
@@ -156,6 +175,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type& clampNdList(const r_type& v, type min, type max) {
+		// Clamp a vector between min and max
 		r_type vec2;
 		for (auto& i : v) {
 			vec2.push_back(clamp<type>(i, min, max));
@@ -166,31 +186,37 @@ namespace sfh {
 	//mag2
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag2d2(const r_type& vec) {
+		// Get the magnitude of a vector squared
 		return vec.x * vec.x + vec.y * vec.y;
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag3d2(const r_type& vec) {
+		// Get the magnitude of a vector squared
 		return vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag2dList2(const r_type& vec) {
+		// Get the magnitude of a vector squared
 		return vec[0] * vec[0] + vec[1] * vec[1];
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag3dList2(const r_type& vec) {
+		// Get the magnitude of a vector squared
 		return vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2];
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag4dList2(const r_type& vec) {
+		// Get the magnitude of a vector squared
 		return vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2] + vec[3] * vec[3];
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type magNdList2(const r_type& vec) {
+		// Get the magnitude of a vector squared
 		double mag2 = 0;
 		for (type& i : vec) {
 			mag2 += i * i;
@@ -201,31 +227,37 @@ namespace sfh {
 	//mag
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag2d(const r_type& vec) {
+		// Get the magnitude of a vector
 		return (type)std::sqrt(vec.x * vec.x + vec.y * vec.y);
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag3d(const r_type& vec) {
+		// Get the magnitude of a vector
 		return (type)std::sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag2dList(const r_type& vec) {
+		// Get the magnitude of a vector
 		return (type)std::sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag3dList(const r_type& vec) {
+		// Get the magnitude of a vector
 		return (type)std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type mag4dList(const r_type& vec) {
+		// Get the magnitude of a vector
 		return (type)std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2] + vec[3] * vec[3]);
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type magNdList(const r_type& vec) {
+		// Get the magnitude of a vector
 		double mag2 = 0;
 		for (type& i : vec) {
 			mag2 += i * i;
@@ -236,6 +268,7 @@ namespace sfh {
 	//sqrt
 	template<typename r_type = sf::Vector2f, typename type = float>
 	const r_type sqrt2d(const r_type& v) {
+		// Get the square root of a vector
 		return {
 			(type)std::sqrt((double)v.x),
 			(type)std::sqrt((double)v.y),
@@ -244,6 +277,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	const r_type sqrt3d(const r_type& v) {
+		// Get the square root of a vector
 		return {
 			(type)std::sqrt((double)v.x),
 			(type)std::sqrt((double)v.y),
@@ -253,6 +287,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type sqrt2dList(const r_type& v) {
+		// Get the square root of a vector
 		return {
 			(type)std::sqrt((double)v[0]),
 			(type)std::sqrt((double)v[1]),
@@ -261,6 +296,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type sqrt3dList(const r_type& v) {
+		// Get the square root of a vector
 		return {
 			(type)std::sqrt((double)v[0]),
 			(type)std::sqrt((double)v[1]),
@@ -270,6 +306,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type sqrt4dList(const r_type& v) {
+		// Get the square root of a vector
 		return {
 			(type)std::sqrt((double)v[0]),
 			(type)std::sqrt((double)v[1]),
@@ -280,6 +317,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type& sqrtNdList(const r_type& v) {
+		// Get the square root of a vector
 		r_type vec2;
 		for (auto& i : v) {
 			vec2.push_back((type)std::sqrt((double)i));
@@ -290,52 +328,62 @@ namespace sfh {
 	//atan2
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type atan2(const r_type& vec) {
+		// Get the angle of a vector
 		return (type)std::atan2(vec.y, vec.x);
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type atan2List(const r_type& vec) {
+		// Get the angle of a vector
 		return (type)std::atan2(vec[1], vec[0]);
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type atan2Rev(const r_type& vec) {
+		// Get the angle of a vector (reverse)
 		return (type)std::atan2(vec.x, vec.y);
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type atan2ListRev(const r_type& vec) {
+		// Get the angle of a vector (reverse)
 		return (type)std::atan2(vec[0], vec[1]);
 	}
 
 	//reverse
 	template<typename r_type = sf::Vector2f>
 	const r_type rev2d(const r_type& v) {
+		// Reverse a vector
 		return { v.y, v.x };
 	}
 
 	template<typename r_type = sf::Vector3f>
 	const r_type rev3d(const r_type& v) {
+		// Reverse a vector
 		return { v.z, v.y, v.x };
 	}
 
 	template<typename r_type = std::vector<float>>
 	const r_type rev2dList(const r_type& v) {
+		// Reverse a vector
 		return { v[1], v[0] };
 	}
 
 	template<typename r_type = std::vector<float>>
 	const r_type rev3dList(const r_type& v) {
+		// Reverse a vector
 		return { v[2], v[1], v[0] };
 	}
 
 	template<typename r_type = std::vector<float>>
 	const r_type rev4dList(const r_type& v) {
+		// Reverse a vector
 		return { v[3], v[2], v[1], v[0] };
 	}
 
 	template<typename r_type = std::vector<float>>
 	const r_type revNdList(const r_type& v) {
+		// Reverse a vector
 		r_type vec2;
 		for (int i = v.size() - 1; i >= 0; i--) {
 			vec2.push_back(v[i]);
@@ -346,17 +394,20 @@ namespace sfh {
 	//normal
 	template<typename r_type = sf::Vector2f, typename type = float>
 	std::pair<r_type, r_type> normal(const r_type& vec) {
+		// Get the normal of a vector
 		return { { vec.y, -vec.x }, { -vec.y, vec.x } };
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	std::pair<r_type, r_type> normalList(const r_type& vec) {
+		// Get the normal of a vector
 		return { { vec[1], -vec[0] }, { -vec[1], vec[0] } };
 	}
 	
 	//normalize
 	template<typename r_type = sf::Vector2f, typename type = float>
 	const r_type normalize2d(const r_type& v) {
+		// Normalize a vector
 		type mag = mag2d<r_type, type>(v);
 		return {
 			v.x / mag,
@@ -366,6 +417,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	const r_type normalize3d(const r_type& v) {
+		// Normalize a vector
 		type mag = mag3d<r_type, type>(v);
 		return {
 			v.x / mag,
@@ -376,6 +428,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type normalize2dlist(const r_type& v) {
+		// Normalize a vector
 		type mag = mag2dList<r_type, type>(v);
 		return {
 			v[0] / mag,
@@ -385,6 +438,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type normalize3dlist(const r_type& v) {
+		// Normalize a vector
 		type mag = mag3dList<r_type, type>(v);
 		return {
 			v[0] / mag,
@@ -395,6 +449,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type normalize4dlist(const r_type& v) {
+		// Normalize a vector
 		type mag = mag4dList<r_type, type>(v);
 		return {
 			v[0] / mag,
@@ -406,6 +461,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	const r_type& normalizeNdList(const r_type& v) {
+		// Normalize a vector
 		type mag = magNdList<r_type, type>(v);
 		r_type vec2;
 		for (auto& i : v) {
@@ -417,11 +473,13 @@ namespace sfh {
 	//lerp
 	template<typename type = float>
 	type lerp(type v1, type v2, type t) {
+		// Linear interpolation
 		return v1 + (v2 - v1) * t;
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	r_type lerp2d(const r_type& vec1, const r_type& vec2, type t) {
+		// Linear interpolation
 		return { 
 			(type)(vec1.x + (vec2.x - vec1.x) * t),
 			(type)(vec1.y + (vec2.y - vec1.y) * t)
@@ -430,6 +488,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	r_type lerp3d(const r_type& vec1, const r_type& vec2, type t) {
+		// Linear interpolation
 		return { 
 			(type)(vec1.x + (vec2.x - vec1.x) * t),
 			(type)(vec1.y + (vec2.y - vec1.y) * t),
@@ -439,6 +498,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	r_type lerp2dList(const r_type& vec1, const r_type& vec2, type t) {
+		// Linear interpolation
 		return {
 			(type)(vec1[0] + (vec2[0] - vec1[0]) * t),
 			(type)(vec1[1] + (vec2[1] - vec1[1]) * t)
@@ -447,6 +507,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	r_type lerp3dList(const r_type& vec1, const r_type& vec2, type t) {
+		// Linear interpolation
 		return {
 			(type)(vec1[0] + (vec2[0] - vec1[0]) * t),
 			(type)(vec1[1] + (vec2[1] - vec1[1]) * t),
@@ -456,6 +517,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	r_type lerp4dList(const r_type& vec1, const r_type& vec2, type t) {
+		// Linear interpolation
 		return {
 			(type)(vec1[0] + (vec2[0] - vec1[0]) * t),
 			(type)(vec1[1] + (vec2[1] - vec1[1]) * t),
@@ -466,6 +528,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	r_type lerpNdList(const r_type& vec1, const r_type& vec2, type t) {
+		// Linear interpolation
 		r_type vec3;
 		for (int i = 0; i < vec1.size(); i++) {
 			vec3.push_back((type)(vec1[i] + (vec2[i] - vec1[i]) * t));
@@ -476,31 +539,37 @@ namespace sfh {
 	//dot
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type dot2d(const r_type& vec1, const r_type& vec2) {
+		// Dot product of two vectors
 		return (type)(vec1.x * vec2.x + vec1.y * vec2.y);
 	}
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	type dot3d(const r_type& vec1, const r_type& vec2) {
+		// Dot product of two vectors
 		return (type)(vec1.x * vec2.x + vec1.y * vec2.y + vec1.z + vec2.z);
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type dot2dList(const r_type& vec1, const r_type& vec2) {
+		// Dot product of two vectors
 		return (type)(vec1[0] * vec2[0] + vec1[1] * vec2[1]);
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type dot3dList(const r_type& vec1, const r_type& vec2) {
+		// Dot product of two vectors
 		return (type)(vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] + vec2[2]);
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type dot4dList(const r_type& vec1, const r_type& vec2) {
+		// Dot product of two vectors
 		return (type)(vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] + vec2[2] + vec1[3] + vec2[3]);
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type dotNdList(const r_type& vec1, const r_type& vec2) {
+		// Dot product of two vectors
 		type dot;
 		for (int i = 0; i < vec1.size(); i++) {
 			dot += vec1[i] * vec2[i];
@@ -511,6 +580,7 @@ namespace sfh {
 	//cross
 	template<typename r_type = sf::Vector2f>
 	r_type crossProduct(const r_type& a, const r_type& b) {
+		// Cross product of two vectors
 		return { 
 			a.y * b.z - a.z * b.y,
 			a.z * b.x - a.x * b.z,
@@ -520,6 +590,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>>
 	r_type crossProductList(const r_type& a, const r_type& b) {
+		// Cross product of two vectors
 		return {
 			a[1] * b[2] - a[2] * b[1],
 			a[2] * b[0] - a[0] * b[2],
@@ -530,6 +601,7 @@ namespace sfh {
 	//distance2
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type distance2d2(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points squared
 		return (type)(
 			(vec1.x - vec2.x) * (vec1.x - vec2.x) +
 			(vec1.y - vec2.y) * (vec1.y - vec2.y)
@@ -538,6 +610,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	type distance3d2(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points squared
 		return (type)(
 			(vec1.x - vec2.x) * (vec1.x - vec2.x) +
 			(vec1.y - vec2.y) * (vec1.y - vec2.y) +
@@ -547,6 +620,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type distance2dList2(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points squared
 		return (type)(
 			(vec1[0] - vec2[0]) * (vec1[0] - vec2[0]) +
 			(vec1[1] - vec2[1]) * (vec1[1] - vec2[1])
@@ -555,6 +629,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type distance3dList2(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points squared
 		return (type)(
 			(vec1[0] - vec2[0]) * (vec1[0] - vec2[0]) +
 			(vec1[1] - vec2[1]) * (vec1[1] - vec2[1]) +
@@ -564,6 +639,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type distance4dList2(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points squared
 		return (type)(
 			(vec1[0] - vec2[0]) * (vec1[0] - vec2[0]) +
 			(vec1[1] - vec2[1]) * (vec1[1] - vec2[1]) +
@@ -574,6 +650,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type distanceNdList2(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points squared
 		type dot;
 		for (int i = 0; i < vec1.size(); i++) {
 			dot += (vec1[i] - vec2[i]) * (vec1[i] - vec2[i]);
@@ -584,6 +661,7 @@ namespace sfh {
 	//distance
 	template<typename r_type = sf::Vector2f, typename type = float>
 	type distance2d(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points
 		return (type)std::sqrt(
 			(vec1.x - vec2.x) * (vec1.x - vec2.x) +
 			(vec1.y - vec2.y) * (vec1.y - vec2.y)
@@ -592,6 +670,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	type distance3d(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points
 		return (type)std::sqrt(
 			(vec1.x - vec2.x) * (vec1.x - vec2.x) +
 			(vec1.y - vec2.y) * (vec1.y - vec2.y) +
@@ -601,6 +680,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type distance2dList(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points
 		return (type)std::sqrt(
 			(vec1[0] - vec2[0]) * (vec1[0] - vec2[0]) +
 			(vec1[1] - vec2[1]) * (vec1[1] - vec2[1])
@@ -609,6 +689,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type distance3dList(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points
 		return (type)std::sqrt(
 			(vec1[0] - vec2[0]) * (vec1[0] - vec2[0]) +
 			(vec1[1] - vec2[1]) * (vec1[1] - vec2[1]) +
@@ -618,6 +699,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type distance4dList(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points
 		return (type)(
 			(vec1[0] - vec2[0]) * (vec1[0] - vec2[0]) +
 			(vec1[1] - vec2[1]) * (vec1[1] - vec2[1]) +
@@ -628,6 +710,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	type distanceNdList(const r_type& vec1, const r_type& vec2) {
+		// Distance between two points
 		type dot;
 		for (int i = 0; i < vec1.size(); i++) {
 			dot += (vec1[i] - vec2[i]) * (vec1[i] - vec2[i]);
@@ -638,22 +721,26 @@ namespace sfh {
 	//complex_vector/list
 	template<typename r_type = sf::Vector2f, typename type = float>
 	std::complex<type> toComplex(const r_type& vec) {
+		// converts a vector to a complex number
 		return { vec.x, vec.y };
 	}
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	std::complex<type> listToComplex(const r_type& vec) {
+		// converts a vector to a complex number
 		return { vec[0], vec[1] };
 	}
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	r_type toVector(const std::complex<type>& vec) {
+		// converts a complex number to a vector
 		return { vec.real, vec.imag };
 	}
 
 	//vector/List_to_string
 	template<typename r_type = std::vector<float>, typename type = float>
 	std::string list2dToString(const r_type& list) {
+		// converts a vector to a string
 		static std::ostringstream oss;
 		oss << "| x: " << list[0] << ", y: " << list[1] << " |";
 		return oss.str();
@@ -661,6 +748,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	std::string list3dToString(const r_type& list) {
+		// converts a vector to a string
 		static std::ostringstream oss;
 		oss << "| x: " << list[0] << ", y: " << list[1] << ", z: " << list[2] << " |";
 		return oss.str();
@@ -668,6 +756,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	std::string list4dToString(const r_type& list) {
+		// converts a vector to a string
 		static std::ostringstream oss;
 		oss << "| x: " << list[0] << ", y: " << list[1] << ", z: " << list[2] << ", w: " << list[3] << " |";
 		return oss.str();
@@ -675,6 +764,7 @@ namespace sfh {
 
 	template<typename r_type = std::vector<float>, typename type = float>
 	std::string listNdToString(const r_type& list) {
+		// converts a vector to a string
 		static std::ostringstream oss;
 		oss << "| ";
 		for (int i = 0; i < list.size(); i++) {
@@ -691,6 +781,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector2f, typename type = float>
 	std::string vec2dToString(const r_type& vec) {
+		// converts a vector to a string
 		static std::ostringstream oss;
 		oss << "| x: " << vec.x << ", y: " << vec.y << " |";
 		return oss.str();
@@ -698,6 +789,7 @@ namespace sfh {
 
 	template<typename r_type = sf::Vector3f, typename type = float>
 	std::string vec3dToString(const r_type& vec) {
+		// converts a vector to a string
 		static std::ostringstream oss;
 		oss << "| x: " << vec.x << ", y: " << vec.y << ", z: " << vec.z << " |";
 		return oss.str();
@@ -706,32 +798,38 @@ namespace sfh {
 	//vector_list
 	template<typename r_type = sf::Vector2f, typename p_type = std::vector<float>, typename type = float>
 	r_type listToVec2d(const p_type& list) {
+		// converts a sf vector to a list
 		return { (type)list[0], (type)list[1] };
 	}
 
 	template<typename r_type = sf::Vector3f, typename p_type = std::vector<float>, typename type = float>
 	r_type listToVec3d(const p_type& list) {
+		// converts a sf vector to a list
 		return { (type)list[0], (type)list[1], (type)list[2]};
 	}
 
 	template<typename r_type = std::vector<float>, typename p_type = sf::Vector2f, typename type = float>
 	r_type vec2dToList(const p_type& list) {
+		// converts a sf vector to a list
 		return { (type)list.x, (type)list.y };
 	}
 
 	template<typename r_type = std::vector<float>, typename p_type = sf::Vector3f, typename type = float>
 	r_type vec3dToList(const p_type& list) {
+		// converts a sf vector to a list
 		return { (type)list.x, (type)list.y, (type)list.z };
 	}
 
 	//2d_3d
 	template<typename r_type = sf::Vector2f, typename p_type = sf::Vector3f, typename type = float>
 	r_type vec3dToVec2d(const p_type& list) {
+		// converts a 3d vector to a 2d vector
 		return { (type)list.x, (type)list.y };
 	}
 
 	template<typename r_type = sf::Vector3f, typename p_type = sf::Vector2f, typename type = float>
 	r_type vec2dToVec3d(const p_type& list, type z = 0) {
+		// converts a 2d vector to a 3d vector
 		return { (type)list.x, (type)list.y, z };
 	}
 }

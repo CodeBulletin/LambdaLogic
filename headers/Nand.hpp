@@ -6,7 +6,7 @@
 class Nand : public Gate {
 public:
     Nand() : Gate("Nand") {
-        this->m_gateType = 2;
+        this->m_gateType = GateType::LOGIC;
 
         for (int i = 0; i < 2; ++i) {
             Pin pin;

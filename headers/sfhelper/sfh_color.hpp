@@ -10,6 +10,7 @@ namespace sfh {
 		//HSL_RGB
 		template<typename r_type = std::vector<float>, typename p_type1 = std::vector<uint8_t>>
 		r_type RGB_to_HSL(const p_type1& col) {
+			// RGB to HSL conversion
 			const float R1 = col[0] / 255.0f;
 			const float G1 = col[1] / 255.0f;
 			const float B1 = col[2] / 255.0f;
@@ -33,11 +34,13 @@ namespace sfh {
 
 		template<typename r_type = std::vector<float>>
 		r_type RGB_to_HSL(const sf::Color& col) {
+			// RGB to HSL conversion
 			return RGB_to_HSL<r_type, std::vector<uint8_t>>({ col.r, col.g, col.b, col.a });
 		}
 
 		template<typename r_type = std::vector<int>, typename p_type = std::vector<float>, typename cast = int>
 		r_type HSL_to_RGB(const p_type& col) {
+			// HSL to RGB conversion
 			float C = (1 - std::fabs(2 * col[2] - 1)) * col[1];
 			float h = col[0] / 60.0f;
 			float X = C * (1 - std::fabs(std::fmod(h, 2) - 1));
@@ -57,6 +60,7 @@ namespace sfh {
 		//HSV_RGB
 		template<typename r_type = std::vector<float>, typename p_type1 = std::vector<uint8_t>>
 		r_type RGB_to_HSV(const p_type1& col) {
+			// RGB to HSV conversion
 			const float R1 = col[0] / 255.0f;
 			const float G1 = col[1] / 255.0f;
 			const float B1 = col[2] / 255.0f;
@@ -78,17 +82,18 @@ namespace sfh {
 
 		template<typename r_type = std::vector<float>>
 		r_type RGB_to_HSV(const sf::Color& col) {
+			// RGB to HSV conversion
 			return RGB_to_HSV<r_type, std::vector<uint8_t>>({ col.r, col.g, col.b, col.a });
 		}
 
 		template<typename r_type = sf::Color, typename p_type = std::vector<float>, typename cast = uint8_t>
 		r_type HSV_to_RGB(const p_type& col) {
+			// HSV to RGB conversion
 			float C = col[2] * col[1];
 			float h = col[0] / 60.0f;
 			float X = C * (1 - std::fabs(std::fmod(h, 2) - 1));
 			float m = col[2] - C;
-			switch (int(h))
-			{
+			switch (int(h)) {
 			case 0: return { (cast)std::round((C + m) * 255.0f), (cast)std::round((X + m) * 255.0f), (cast)std::round((m) * 255.0f), (cast)col[3] };
 			case 1: return { (cast)std::round((X + m) * 255.0f), (cast)std::round((C + m) * 255.0f), (cast)std::round((m) * 255.0f), (cast)col[3] };
 			case 2: return { (cast)std::round((m) * 255.0f), (cast)std::round((C + m) * 255.0f), (cast)std::round((X + m) * 255.0f), (cast)col[3] };
@@ -102,6 +107,7 @@ namespace sfh {
 		//HSV_HSL
 		template<typename list1 = std::vector<float>, typename list2 = std::vector<float>, typename cast = float, typename cast2 = float>
 		list1 HSV_to_HSL(list2 HSV) {
+			// HSV to HSL conversion
 			cast h = HSV[0];
 			cast l = (HSV[2] - (HSV[2] * HSV[1]) / 2.0f);
 			cast s = (l == 0.0f || l == 1.0f) ? 0.0f : (HSV[2] - l) / (std::min<cast2>(l, 1.0f - l));
@@ -110,6 +116,7 @@ namespace sfh {
 
 		template<typename list1 = std::vector<float>, typename list2 = std::vector<float>, typename cast = float, typename cast2 = float>
 		list1 HSL_to_HSV(list2 HSL) {
+			// HSL to HSV conversion
 			cast h = HSL[0];
 			cast v = (HSL[2] + (HSL[1] * std::min<cast2>(HSL[2], 1.0 - HSL[2])));
 			cast s = (v == 0.0f) ? 0.0f : 2.0f - (2.0f * (cast)HSL[2] / v);
@@ -119,6 +126,7 @@ namespace sfh {
 		//RGB_Hex
 		template<typename r_type = sf::Color, typename d_type = uint8_t>
 		r_type hexToRGBA(uint32_t hex) {
+			// Hex to RGBA conversion
 			d_type r = hex >> 24;
 			uint32_t x = hex << 8;
 			d_type g = x >> 24;
@@ -131,6 +139,7 @@ namespace sfh {
 
 		template<typename r_type = sf::Color, typename d_type = uint8_t>
 		r_type hexToRGB(uint32_t hex, d_type alpha = 255) {
+			// Hex to RGB conversion
 			uint32_t x = hex << 8;
 			d_type r = x >> 24;
 			x = hex << 16;
@@ -141,6 +150,7 @@ namespace sfh {
 		}
 
 		uint32_t RGBAtoHex(const sf::Color& color) {
+			// RGBA to Hex conversion
 			uint32_t hex = color.r;
 			hex <<= 8;
 			hex += color.g;
@@ -153,6 +163,7 @@ namespace sfh {
 
 		template<typename type = std::vector<uint8_t>>
 		uint32_t RGBAtoHex(const type& color) {
+			// RGBA to Hex conversion
 			uint32_t hex = color[0];
 			hex <<= 8;
 			hex += color[1];
@@ -166,27 +177,32 @@ namespace sfh {
 		//Vec_Color
 		template<typename list = std::vector<uint8_t>, typename cast = uint8_t>
 		list colorToVector(const sf::Color& col) {
+			// Color to Vector conversion
 			return { (cast)col.r, (cast)col.g, (cast)col.b, (cast)col.a };
 		}
 
 		template<typename list = std::vector<uint8_t>, typename list2 = std::vector<int>, typename cast = uint8_t>
 		list vectorToVector(const list2& col) {
+			// Vector to Vector conversion
 			return { (cast)col[0], (cast)col[1], (cast)col[2], (cast)col[3] };
 		}
 
 		template<typename list = std::vector<uint8_t>>
 		sf::Color vectorToColor(const list& col) {
+			// Vector to Color conversion
 			return { (uint8_t)col[0], (uint8_t)col[1], (uint8_t)col[2], (uint8_t)col[3] };
 		}
 
 		//lerp
 		template<typename list = std::vector<float>, typename type = float>
 		list lerpHue(const list& Hue1, type Hue , type x) {
+			// Hue lerp linear interpolation
 			return { Hue1[0] + (Hue - Hue1[0]) * x, Hue1[1], Hue1[2], Hue1[3] };
 		}
 
 		template<typename type = float>
 		sf::Color lerp(const sf::Color& L1, const sf::Color& L2, type x1, type x2, type x3, type x4) {
+			// Color lerp linear interpolation
 			return {
 				(uint8_t)(L1.r + (L2.r - L1.r) * x1),
 				(uint8_t)(L1.g + (L2.g - L1.g) * x2),
@@ -197,6 +213,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list lerp(const list& L1, const list& L2, const type x1, type x2, type x3, type x4) {
+			// Vector lerp linear interpolation
 			return { 
 				(cast)(L1[0] + (L2[0] - L1[0]) * x1),
 				(cast)(L1[1] + (L2[1] - L1[1]) * x2),
@@ -207,6 +224,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list lerp(const list& L1, const sf::Color& L2, type x1, type x2, type x3, type x4) {
+			// Vector lerp linear interpolation
 			return {
 				(cast)(L1[0] + (L2.r - L1[0]) * x1),
 				(cast)(L1[1] + (L2.g - L1[1]) * x2),
@@ -217,6 +235,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list lerp(const sf::Color& L1, const list& L2, type x1, type x2, type x3, type x4) {
+			// Vector lerp linear interpolation
 			return {
 				(cast)(L1.r + (L2[0] - L1.r) * x1),
 				(cast)(L1.g + (L2[1] - L1.g) * x2),
@@ -227,27 +246,32 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list lerp(const list& L1, const list& L2, type x) {
+			// Vector lerp linear interpolation
 			return lerp<list, type, cast>(L1, L2, x, x, x, x);
 		}
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list lerp(const list& L1, const sf::Color& L2, type x) {
+			// Vector lerp linear interpolation
 			return lerp<list, type, cast>(L1, L2, x, x, x, x);
 		}
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list lerp(const sf::Color& L1, const list& L2, type x) {
+			// Vector lerp linear interpolation
 			return lerp<list, type, cast>(L1, L2, x, x, x, x);
 		}
 
 		template<typename type = float>
 		sf::Color lerp(const sf::Color& L1, const sf::Color& L2, type x) {
+			// Color lerp linear interpolation
 			return lerp<type>(L1, L2, x, x, x, x);
 		}
 
 		//Additive Mixing
 		template<typename type = float>
 		sf::Color additive_mixing(const sf::Color& L1, const sf::Color& L2) {
+			// Additive Color Mixing
 			return {
 				(uint8_t)((L2.r + L1.r) * 0.5f),
 				(uint8_t)((L2.g + L1.g) * 0.5f),
@@ -258,6 +282,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list additive_mixing(const sf::Color& L1, const list& L2) {
+			// Additive Color Mixing
 			return {
 				(cast)((L2[0] + L1.r) * 0.5f),
 				(cast)((L2[1] + L1.g) * 0.5f),
@@ -268,6 +293,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list additive_mixing(const list& L1, const sf::Color& L2) {
+			// Additive Color Mixing
 			return {
 				(cast)((L2.r + L1[0]) * 0.5f),
 				(cast)((L2.r + L1[1]) * 0.5f),
@@ -278,6 +304,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list additive_mixing(const list& L1, const list& L2) {
+			// Additive Color Mixing
 			return {
 				(cast)((L2[0] + L1[0]) * 0.5f),
 				(cast)((L2[1] + L1[1]) * 0.5f),
@@ -289,6 +316,7 @@ namespace sfh {
 		template<typename listof = std::vector<std::pair<std::vector<uint8_t>, int>>,
 			typename r_type = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		r_type additive_mixing(const listof& L1) {
+			// Additive Color Mixing
 			type r = 0, g = 0, b = 0, a = 0;
 			type n = 0;
 			for (auto i : L1) {
@@ -307,6 +335,7 @@ namespace sfh {
 
 		template<typename type = float>
 		sf::Color additive_mixing(const std::vector<std::pair<sf::Color, int>>& L1) {
+			// Additive Color Mixing
 			type r = 0, g = 0, b = 0, a = 0;
 			type n = 0;
 			for (auto i : L1) {
@@ -326,6 +355,7 @@ namespace sfh {
 		//Subtractive Mixing
 		template<typename type = float>
 		sf::Color subtractive_mixing(const sf::Color& L1, const sf::Color& L2) {
+			// Subtractive Color Mixing
 			return {
 				(uint8_t)((L2.r * L1.r) / 255.0f),
 				(uint8_t)((L2.g * L1.g) / 255.0f),
@@ -336,6 +366,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list subtractive_mixing(const sf::Color& L1, const list& L2) {
+			// Subtractive Color Mixing
 			return {
 				(cast)((L2[0] * L1.r) / 255.0f),
 				(cast)((L2[1] * L1.g) / 255.0f),
@@ -346,6 +377,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list subtractive_mixing(const list& L1, const sf::Color& L2) {
+			// Subtractive Color Mixing
 			return {
 				(cast)((L2.r * L1[0]) / 255.0f),
 				(cast)((L2.r * L1[1]) / 255.0f),
@@ -356,6 +388,7 @@ namespace sfh {
 
 		template<typename list = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
 		list subtractive_mixing(const list& L1, const list& L2) {
+			// Subtractive Color Mixing
 			return {
 				(cast)((L2[0] * L1[0]) / 255.0f),
 				(cast)((L2[1] * L1[1]) / 255.0f),
@@ -366,7 +399,8 @@ namespace sfh {
 
 		template<typename listof = std::vector<std::vector<uint8_t>>,
 			typename r_type = std::vector<uint8_t>, typename type = float, typename cast = uint8_t>
-			r_type subtractive_mixing(const listof& L1) {
+		r_type subtractive_mixing(const listof& L1) {
+			// Subtractive Color Mixing (listof = list of lists)
 			type r = 1.0, g = 1.0, b = 1.0, a = 1.0;
 			for (auto i : L1) {
 				r *= (type)i[0] / (type)255.0;
@@ -382,7 +416,8 @@ namespace sfh {
 		}
 
 		template<typename type = float>
-			sf::Color subtractive_mixing(const std::vector<sf::Color>& L1) {
+		sf::Color subtractive_mixing(const std::vector<sf::Color>& L1) {
+			// Subtractive Color Mixing
 			type r = 1.0, g = 1.0, b = 1.0, a = 1.0;
 			for (auto i : L1) {
 				r *= (type)i.r / (type)255.0;
@@ -400,6 +435,7 @@ namespace sfh {
 		//Gradient
 		template<typename list = std::vector<float>, typename type = float>
 		std::vector<list> gradientHue(list Hue1, list Hue2, int n) {
+			//Hue1 and Hue2 are in the form of {H, S, V, A} or {H, S, V} or {H, S, L, A} or {H, S, L}
 			std::vector<list> ColList;
 			for (int i = 0; i < n; i++) {
 				float t = (float)i / (float)n;
@@ -410,6 +446,7 @@ namespace sfh {
 
 		template<typename type = float>
 		std::vector<sf::Color> gradientRGBA(sf::Color Col1, sf::Color Col2, int n) {
+			//Col1 and Col2 are in the form of {R, G, B, A} or {R, G, B}
 			std::vector<sf::Color> ColList;
 			for (int i = 0; i < n; i++) {
 				float t = (float)i / (float)n;
@@ -420,6 +457,7 @@ namespace sfh {
 		
 		template<typename list = std::vector<float>, typename type = float>
 		std::vector<list> gradientRGBA(list Hue1, list Hue2, int n) {
+			//Hue1 and Hue2 are in the form of {R, G, B, A} or {R, G, B}
 			std::vector<list> ColList;
 			for (int i = 0; i < n; i++) {
 				float t = (float)i / (float)n;

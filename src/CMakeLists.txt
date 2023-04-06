@@ -15,6 +15,10 @@ FetchContent_Declare (
     GIT_REPOSITORY https://github.com/ocornut/imgui.git
     GIT_TAG        master
 )
+
+option(IMGUI_EXAMPLES "Build ImGui examples" ON)
+option(IMGUI_DEMO "Include the ImGui demo window implementation in library" ON)
+
 fetchcontent_makeavailable (imgui)
 
 # Use FetchContent to download and include imgui-sfml
@@ -27,6 +31,7 @@ FetchContent_Declare (
 # Set the IMGUI_DIR variable to the directory containing imgui
 set(IMGUI_DIR ${imgui_SOURCE_DIR})
 set(IMGUI_SFML_FIND_SFML OFF)  # Don't search for SFML, we already did that
+option(IMGUI_SFML_IMGUI_DEMO "Build imgui_demo.cpp" ON)
 
 # Download and build imgui-sfml, linking against imgui and SFML
 fetchcontent_makeavailable (imgui-sfml)

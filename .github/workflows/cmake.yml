@@ -22,8 +22,7 @@ jobs:
       with:
         name: linux-build
         path: |
-          build/LambdaLogic
-          build/Assets
+          build/bin
   # macos:
   #   runs-on: macos-latest
   #   steps:

@@ -2,6 +2,11 @@
 #include <algorithm>
 
 void Simulation::update() {
+    for (const auto key : this->m_pins) {
+        auto pin = key.second;
+        pin->computeState();
+    }
+
     for (int i = 0; i < this->m_chips.size(); i++) {
         Gate *chip = this->m_chips[i];
         chip->compute();
@@ -11,32 +16,19 @@ void Simulation::update() {
         auto connection = key.second;
         Pin *from = this->m_pins[connection->getFrom()];
         Pin *to = this->m_pins[connection->getTo()];
-        to->setState(from->getState());
+        to->addState(from->getState());
     }
-
-#ifndef NDEBUG
-//    sfh::debug::log("Simulation::update()");
-//    for (const auto& chip : this->m_chips) {
-//        sfh::debug::log("\tchip: ", chip->getName(), " - id: ", chip->getId());
-//        for (int j = 0; j < chip->getInputPinCount(); j++) {
-//            sfh::debug::log("\t\tinput pin: ", chip->getInputPins()[j].getId(), " - state: ", chip->getInputPins()[j].getState());
-//        }
-//        for (int j = 0; j < chip->getOutputPinCount(); j++) {
-//            sfh::debug::log("\t\toutput pin: ", chip->getOutputPins()[j].getId(), " - state: ", chip->getOutputPins()[j].getState());
-//        }
-//    }
-#endif
 }
 
 void Simulation::run() {
-//    this->m_time = this->m_clock.getElapsedTime();
-//    if (this->m_time.asSeconds() >= this->tick_rate) {
-//        this->m_clock.restart();
+   this->m_time = this->m_clock.getElapsedTime();
+   if (this->m_time.asSeconds() >= this->m_tickRate) {
+       this->m_clock.restart();
         this->m_ticks+=m_updatePerTick;
         for (int i = 0; i < this->m_updatePerTick; i++) {
             this->update();
         }
-//    }
+   }
 }
 
 void Simulation::addChip(Gate *chip) {
@@ -55,6 +47,28 @@ void Simulation::removeChip(int chip_id) {
     for (int i = 0; i < this->m_chips.size(); i++) {
         if (this->m_chips[i]->getId() == chip_id) {
             Gate* chip = this->m_chips[i];
+            for (int j = chip->getInputPinCount() - 1; j >= 0; j--) {
+                for (int k = chip->getInputPins()[j].getConnections().size() - 1; k >= 0 ; k--) {
+                    Connection* connection = chip->getInputPins()[j].getConnections()[k];
+                    Pin* to = this->m_pins[connection->getTo()];
+                    Pin* from = this->m_pins[connection->getFrom()];
+                    to->removeConnection(connection);
+                    from->removeConnection(connection);
+                    this->m_connections.erase(connection->getId());
+                    delete connection;
+                }
+            }
+            for (int j = chip->getOutputPinCount() - 1; j >= 0 ; j--) {
+                for (int k = chip->getOutputPins()[j].getConnections().size() - 1; k >= 0; k--) {
+                    Connection* connection = chip->getOutputPins()[j].getConnections()[k];
+                    Pin* to = this->m_pins[connection->getTo()];
+                    Pin* from = this->m_pins[connection->getFrom()];
+                    to->removeConnection(connection);
+                    from->removeConnection(connection);
+                    this->m_connections.erase(connection->getId());
+                    delete connection;
+                }
+            }          
             for (int j = 0; j < chip->getInputPinCount(); j++) {
                 removePin(chip->getInputPins()[j].getId());
             }
@@ -78,14 +92,31 @@ void Simulation::removePin(int pin_id) {
     this->m_pins.erase(pin_id);
 }
 
+bool Simulation::isConnectionPossible(int from, int to) {
+    Pin* fromPin = this->m_pins[from];
+    Pin* toPin = this->m_pins[to];
 
+    if (fromPin->getPinType() == toPin->getPinType()) {
+        return false;
+    }
+
+    return true;
+}
 
 void Simulation::createConnection(int from, int to) {
+    Pin* fromPin = this->m_pins[from];
+    Pin* toPin = this->m_pins[to];
+
+    if (fromPin->getPinType() == PinType::INPUT) {
+        std::swap(from, to);
+        std::swap(fromPin, toPin);
+    }
+
     auto* connection = new Connection();
     connection->setFrom(this->m_pins[from]);
     connection->setTo(this->m_pins[to]);
-    this->m_pins[from]->addConnection(connection);
-    this->m_pins[to]->addConnection(connection);
+    fromPin->addConnection(connection);
+    toPin->addConnection(connection);
     this->m_connections[connection->getId()] = connection;
 }
 
@@ -125,9 +156,3 @@ Simulation::~Simulation() {
         delete chip;
     }
 }
-
-#ifndef NDEBUG
-void Simulation::setPinState(int pin_id, int state) {
-    this->m_pins[pin_id]->setState(state);
-}
-#endif

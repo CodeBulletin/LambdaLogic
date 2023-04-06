@@ -15,6 +15,14 @@ public:
     Object(Object&& other) noexcept: m_id(other.m_id), m_type(std::move(other.m_type)) {}
     ~Object() = default;
 
+    static void setIdCounter(int id) {
+        id_counter = id;
+    }
+
+    [[nodiscard]] static int getIdCounter() {
+        return id_counter;
+    }
+
     [[nodiscard]] int getId() const {
         return this->m_id;
     }

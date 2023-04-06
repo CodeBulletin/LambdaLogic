@@ -10,6 +10,7 @@
 namespace sfh {
 	namespace shape {
 		std::vector<sf::Vertex> line(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Color& col = sf::Color::White) {
+			// Create a line between two points
 			std::vector<sf::Vertex> vertArray(2);
 			vertArray[0].position = p1;
 			vertArray[0].color = col;
@@ -20,6 +21,7 @@ namespace sfh {
 
 		std::vector<sf::Vertex> thickLine(const sf::Vector2f& p1, const sf::Vector2f& p2,
 			float size, const sf::Color& col = sf::Color::White) {
+			// Create line between two points with given thickness
 			std::vector<sf::Vertex> vertArray(4);
 			sf::Vector2f unit_normal = sfh::normalize2d(sfh::normal({ p2.x - p1.x, p2.y - p1.y }).first);
 			sf::Vector2f resized_normal = { unit_normal.x * size / 2.0f,  unit_normal.y * size / 2.0f };
@@ -35,6 +37,7 @@ namespace sfh {
 		}
 
 		std::vector<sf::Vertex> square(const sf::Vector2f& pos, const sf::Vector2f& size, const sf::Color& col = sf::Color::White) {
+			// Create a square with given position and size
 			std::vector<sf::Vertex> vertArray(4);
 			vertArray[0].position = pos;
 			vertArray[0].color = col;
@@ -48,6 +51,7 @@ namespace sfh {
 		}
 
 		std::vector<sf::Vertex> triangle(const sf::Vector2f& pos, const sf::Vector2f& baseHight, const sf::Color& col = sf::Color::White) {
+			// Create a triangle with given position and base hight
 			std::vector<sf::Vertex> vertArray(3);
 			vertArray[0].position = pos;
 			vertArray[0].color = col;

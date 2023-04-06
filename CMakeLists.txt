@@ -11,8 +11,6 @@ set(ExecutableName "LambdaLogic")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_LINKER_FLAGS "-static -static-libgcc -static-libstdc++")
-set(SFML_STATIC_LIBRARIES TRUE)
 
 # Include CTest and enable testing
 include(CTest)
@@ -26,26 +24,24 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
 # Copy the Assets directory to the build directory
-file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
 # Add the src directory to the build
 add_subdirectory(src)
 
-# Set the output directory for the executable
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-
 # Create the executable and specify the source files
-add_executable(${ExecutableName} ./src/main.cpp src/Pin.cpp src/Gate.cpp src/Simulation.cpp headers/Simulation.hpp src/Connection.cpp headers/Connection.hpp headers/Nand.hpp headers/Object.hpp)
+add_executable(${ExecutableName} src/main.cpp src/Pin.cpp src/Gate.cpp src/Simulation.cpp src/Connection.cpp src/Sketch.cpp )
 
 # Add include directories for the executable
 target_include_directories(${ExecutableName} PRIVATE ./headers/ "${IMGUI_DIR}" "${sfml_SOURCE_DIR}/include")
 
 # Link the executable against the necessary libraries
-target_link_libraries(${ExecutableName} PRIVATE ImGui-SFML::ImGui-SFML sfml-graphics sfml-window sfml-system)
+target_link_libraries(${ExecutableName} PUBLIC ImGui-SFML::ImGui-SFML sfml-graphics sfml-window sfml-system -static-libgcc -static-libstdc++)
 
 
 # Set properties for the executable
 set_target_properties(${ExecutableName} PROPERTIES
     DESCRIPTION "${PROJECT_DESCRIPTION}"
     VERSION "${PROJECT_VERSION}"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )

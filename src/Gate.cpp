@@ -26,7 +26,7 @@ void Gate::setColor(sf::Color chip_color) {
     this->m_color = chip_color;
 }
 
-void Gate::setType(int chip_type) {
+void Gate::setGateType(int chip_type) {
     this->m_gateType;
 }
 
@@ -62,6 +62,9 @@ std::string Gate::getName() const {
     return this->m_name.getString();
 }
 
+int Gate::getGateType() const {
+    return this->m_gateType;
+}
 
 // other functions
 void Gate::compute_shape() {
@@ -118,8 +121,8 @@ void Gate::draw(sf::RenderWindow& window) {
 
     //drawing Gate name
     this->m_name.setPosition({
-                                     this->m_pos.x + this->m_size.x / 2.0f - this->m_name.getGlobalBounds().width / 2.0f,
-                                     this->m_pos.y + this->m_size.y / 2.0f - this->m_name.getGlobalBounds().height
+        this->m_pos.x + this->m_size.x / 2.0f - this->m_name.getGlobalBounds().width / 2.0f,
+        this->m_pos.y + this->m_size.y / 2.0f - this->m_name.getGlobalBounds().height
     });
     this->m_name.setFillColor(this->m_gate_settings_ref->chip_text_color);
     window.draw(this->m_name);

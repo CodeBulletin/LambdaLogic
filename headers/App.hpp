@@ -18,6 +18,7 @@ public:
 	~App() = default;
 
 	void create_window(std::string name, uint32_t style, sf::Vector3<uint32_t> vec = {500u, 500u, 32u}) {
+		// Create the window
 		this->m_name = name;
 		this->m_style = style;
 		this->m_videoMode = sf::VideoMode({vec.x, vec.y}, vec.z);
@@ -28,6 +29,7 @@ public:
 	}
 
 	virtual void run() {
+		// Run the app
 		setup();
 		while (this->m_window.isOpen()) {
 			this->m_frameTime = this->m_clock.getElapsedTime().asSeconds();
@@ -50,34 +52,34 @@ public:
 		}
 	}
 
-	virtual void setup() = 0;
-	virtual void loop() = 0;
+	virtual void setup() = 0;  // Setup the app
+	virtual void loop() = 0;  // Loop the app
 
-	virtual void close() {
+	virtual void close() {  // Close the app
 		this->m_window.close();
 	}
 
 	virtual void gui() {}
 
-	virtual void keyPressedEvent() {}
-	virtual void keyReleasedEvent() {}
-	virtual void mouseButtonPressedEvent() {}
-	virtual void mouseButtonReleasedEvent() {}
-	virtual void closedEvent() {
+	virtual void keyPressedEvent() {}  // Event manager key pressed
+	virtual void keyReleasedEvent() {}  // Event manager key released
+	virtual void mouseButtonPressedEvent() {}  // Event manager mouse button pressed
+	virtual void mouseButtonReleasedEvent() {}  // Event manager mouse button released
+	virtual void closedEvent() {  // Event manager is window closed
 		close();
 	}
-	virtual void lostFocusEvent() {}
-	virtual void gainedFocusEvent() {}
-	virtual void mouseEnteredEvent() {}
-	virtual void mouseLeftEvent() {}
-	virtual void mouseMovedEvent() {}
-	virtual void mouseWheelScrolledEvent() {}
-	virtual void textEnteredEvent() {}
-	virtual void resizeEvent() {}
+	virtual void lostFocusEvent() {}  // Event manager has window lost focus
+	virtual void gainedFocusEvent() {}  // Event manager has window gained focus
+	virtual void mouseEnteredEvent() {}  // Event manager has mouse entered window
+	virtual void mouseLeftEvent() {}  // Event manager has mouse left window
+	virtual void mouseMovedEvent() {}  // Event manager has mouse moved
+	virtual void mouseWheelScrolledEvent() {}  // Event manager has mouse wheel scrolled
+	virtual void textEnteredEvent() {}  // Event manager has text entered
+	virtual void resizeEvent() {}  // Event manager has window resized
 
 	virtual void eventManager() {
-		switch (this->m_event.type)
-		{
+		// Manage events
+		switch (this->m_event.type) {
 		case sf::Event::KeyPressed:
 			keyPressedEvent();
 			break;
