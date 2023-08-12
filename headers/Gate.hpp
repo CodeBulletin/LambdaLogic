@@ -41,7 +41,7 @@ public:
     virtual std::vector<Pin>& getInputPins();
     virtual std::vector<Pin>& getOutputPins();
     virtual std::string getName() const;
-    virtual const sf::RectangleShape& getRect() const;
+    virtual sf::FloatRect getBounds() const;
     virtual int getGateType() const;
 
     // other functions

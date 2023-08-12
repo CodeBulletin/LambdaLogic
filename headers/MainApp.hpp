@@ -97,7 +97,7 @@ public:
 			ImGui::EndMainMenuBar();
 		}
 
-        ImGui::ShowDemoWindow();
+//        ImGui::ShowDemoWindow();
 	}
 
     sf::RenderWindow& getWindow(){
@@ -182,6 +182,7 @@ public:
     void middleMouseButtonPressed(sf::Vector2f mouse_pos) {
         selected_pin_id = -1;
         Object *obj = sketch.getSimulation().clicked(mouse_pos);
+        if (obj == nullptr) return;
         if (obj->getType() == "Gate") {
             Gate *gate = (Gate *) obj;
             sketch.removeGate(gate);

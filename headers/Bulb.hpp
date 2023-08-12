@@ -60,4 +60,9 @@ public:
         this->m_InputPins[0].setPos(pin_pos);
         this->m_InputPins[0].draw(window);
     }
+
+    sf::FloatRect getBounds() const override {
+        sf::FloatRect fr(this->m_shape.getPosition(), {2 * m_shape.getRadius(), 2 * m_shape.getRadius()});
+        return fr;
+    }
 };

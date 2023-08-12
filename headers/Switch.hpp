@@ -20,7 +20,7 @@ public:
         compute_shape();
     }
 
-    void onClick() {
+    void onClick() override {
         this->m_state = !this->m_state;
     }
 

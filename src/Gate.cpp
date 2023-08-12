@@ -128,6 +128,7 @@ void Gate::draw(sf::RenderWindow& window) {
     window.draw(this->m_name);
 }
 
-const sf::RectangleShape &Gate::getRect() const {
-    return m_shape;
+sf::FloatRect Gate::getBounds() const {
+    sf::FloatRect fr(m_shape.getPosition(), m_shape.getSize());
+    return fr;
 }

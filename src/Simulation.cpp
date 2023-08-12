@@ -141,7 +141,7 @@ Object* Simulation::clicked(sf::Vector2f pos) {
         }
     }
     for (const auto& chip : this->m_chips) {
-        if (chip->getRect().getGlobalBounds().contains(pos)) {
+        if (chip->getBounds().contains(pos)) {
             return chip;
         }
     }
